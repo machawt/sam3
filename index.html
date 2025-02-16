@@ -62,13 +62,19 @@
         <div class="drag-items" id="dragItemsContainer"></div>
         <div class="navigation">
             <button id="prevButton" onclick="showPreviousParagraph()">Previous</button>
+            <button id="playSound" onclick="playsound()">Play Sound</button>
+  	<button id="stopSound" onclick="stopsound()">Stop Sound</button>
             <button id="nextButton" onclick="showNextParagraph()">Next</button>
             <button onclick="checkAnswers()">Check Answers</button>
+
         </div>
     </div>
 
     <script>
-        // Array of paragraphs with blanks
+let beat = new Audio('s01.mp3');        //connect sound file
+let st=[1,34,73,114,150,171,218,324];//timing of sound
+
+// Array of paragraphs with blanks
         const paragraphs = [
                        {
                 id: 'paragraph1',
@@ -83,7 +89,7 @@
             },
   {
                 id: 'paragraph2',
-                text: '        וַיִּקְרָ֧א יְהוָ֛ה אֶל־שְׁמוּאֵ֖ל וַיֹּ֥אמֶר {}׃ 5       וַיָּ֣רָץ אֶל־עֵלִ֗י וַיֹּ֤אמֶר הִנְנִי֙ כִּֽי־קָרָ֣אתָ לִּ֔י וַיֹּ֥אמֶר לֹֽא־{} שׁ֣וּב שְׁכָ֑ב וַיֵּ֖לֶךְ וַיִּשְׁכָּֽב׃ ס  6       וַיֹּ֣סֶף יְהוָ֗ה קְרֹ֣א עוֹד֮ שְׁמוּאֵל֒ וַיָּ֤קָם שְׁמוּאֵל֙ וַיֵּ֣לֶךְ אֶל־עֵלִ֔י וַיֹּ֣אמֶר הִנְנִ֔י כִּ֥י {} לִ֑י {} לֹֽא־קָרָ֥אתִי בְנִ֖י שׁ֥וּב {}',
+                text: '        וַיִּקְרָ֧א יְהוָ֛ה אֶל־שְׁמוּאֵ֖ל וַיֹּ֥אמֶר {}׃ 5       וַיָּ֣רָץ אֶל־עֵלִ֗י וַיֹּ֤אמֶר הִנְנִי֙ כִּֽי־קָרָ֣אתָ לִּ֔י וַיֹּ֥אמֶר לֹֽא־{} שׁ֣וּב שְׁכָ֑ב וַיֵּ֖לֶךְ וַיִּשְׁכָּֽב׃ ס  6       וַיֹּ֣סֶף יְהוָ֗ה קְרֹ֣א עוֹד֮ שְׁמוּאֵל֒ וַיָּ֤קָם שְׁמוּאֵל֙ וַיֵּ֣לֶךְ אֶל־עֵלִ֔י וַיֹּ֣אמֶר הִנְנִ֔י כִּ֥י {} לִ֑י {} לֹֽא־קָרָ֥אתִי בְנִ֖י שׁ֥וּב {}י',
                 blanks: [
                     { id: 'dropZone1', correctAnswer: 'dragItem6' }, // 
                     { id: 'dropZone2', correctAnswer: 'dragItem8' }, // 
@@ -298,6 +304,7 @@
 
             if (allCorrect) {
                 alert('All answers are correct! Well done!');
+		playsound();
             } else {
                 alert('Some answers are incorrect. Please try again.');
             }
@@ -330,6 +337,12 @@
             prevButton.disabled = currentParagraphIndex === 0;
             nextButton.disabled = currentParagraphIndex === paragraphs.length - 1;
         }
+
+function playsound() {tm=Number (st[currentParagraphIndex]);beat.currentTime=tm;beat.play();}
+                   // Play the beat
+                   
+function stopsound() {beat.pause();}
+                   // stop the beat
 
         // Initialize the exercise when the page loads
         generateParagraphs();
